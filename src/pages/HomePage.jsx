@@ -17,6 +17,7 @@ const HomePage = () => {
         setLoading(true);
         const res = await axios.get("/");
         setProjects(res.data);
+        console.log("res data after fecthing products", res.data);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -60,7 +61,7 @@ const HomePage = () => {
     if (!deleteProjectId) return;
     try {
       await axios.delete(`/${deleteProjectId}`);
-      setProjects(projects.filter((p) => p._id !== deleteProjectId));
+      setProjects(projects.filter((p) => p.id !== deleteProjectId));
       setModalOpen(false);
       setDeleteProjectId(null);
       toast.success("Project deleted successfully");
@@ -109,9 +110,15 @@ const HomePage = () => {
               {loading ? (
                 <tbody>
                   <tr>
-                    <td colSpan={columns.length + 1} className="py-4 text-center">
+                    <td
+                      colSpan={columns.length + 1}
+                      className="py-4 text-center"
+                    >
                       <div className="flex items-center justify-center">
-                        <Loader className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
+                        <Loader
+                          className="mr-2 h-5 w-5 animate-spin"
+                          aria-hidden="true"
+                        />
                         Loading Projects..
                       </div>
                     </td>
@@ -138,7 +145,7 @@ const HomePage = () => {
                         ))}
                         <td className="px-4 py-2">
                           <div className="flex items-center gap-2">
-                            <Link to={`/update/${row._id}`}>
+                            <Link to={`/update/${row.id}`}>
                               <button className="bg-blue-500 hover:bg-blue-400 text-white py-1 px-3 rounded-lg text-sm">
                                 Edit
                               </button>
@@ -146,7 +153,7 @@ const HomePage = () => {
                             <button
                               className="bg-red-500 hover:bg-red-400 text-white py-1 px-3 rounded-lg text-sm"
                               onClick={() => {
-                                setDeleteProjectId(row._id);
+                                setDeleteProjectId(row.id);
                                 setModalOpen(true);
                               }}
                             >
@@ -173,7 +180,10 @@ const HomePage = () => {
             <div className="md:hidden space-y-4">
               {loading ? (
                 <div className="flex items-center justify-center py-4">
-                  <Loader className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
+                  <Loader
+                    className="mr-2 h-5 w-5 animate-spin"
+                    aria-hidden="true"
+                  />
                   <span>Loading Projects..</span>
                 </div>
               ) : filteredData.length > 0 ? (
@@ -197,17 +207,22 @@ const HomePage = () => {
                     <p className="text-sm text-gray-600">{row.description}</p>
                     <div className="text-sm">
                       <p>
-                        <span className="font-medium">Skills:</span> {row.skillSet}
+                        <span className="font-medium">Skills:</span>{" "}
+                        {row.skillSet}
                       </p>
                       <p>
-                        <span className="font-medium">Members:</span> {row.no_of_members}
+                        <span className="font-medium">Members:</span>{" "}
+                        {row.no_of_members}
                       </p>
                       <p>
-                        <span className="font-medium">Created:</span> {formatDate(row.createdDate)}
+                        <span className="font-medium">Created:</span>{" "}
+                        {formatDate(row.createdDate)}
                       </p>
                     </div>
                     <div className="flex gap-2 pt-2">
-                      <Link to={`/update/${row._id}`} className="flex-1">
+                      {console.log("Rendering row:", row)}
+                      {console.log("row.id:", row.id)}
+                      <Link to={`/update/${row.id}`} className="flex-1">
                         <button className="w-full bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 rounded-lg text-sm">
                           Edit
                         </button>
@@ -215,7 +230,7 @@ const HomePage = () => {
                       <button
                         className="flex-1 bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded-lg text-sm"
                         onClick={() => {
-                          setDeleteProjectId(row._id);
+                          setDeleteProjectId(row.id);
                           setModalOpen(true);
                         }}
                       >
