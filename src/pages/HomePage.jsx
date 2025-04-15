@@ -84,8 +84,8 @@ const HomePage = () => {
 
   return (
     <>
-    <div className="flex items-center justify-center">
-    <h1>Cloud based Project Management</h1>
+    <div className="mt-10">
+    <h1 className="text-4xl font-bold text-center ">Cloud based Project Management</h1>
     </div>
       {/* Logout Button */}
       <div className="fixed top-4 right-4 z-50">
