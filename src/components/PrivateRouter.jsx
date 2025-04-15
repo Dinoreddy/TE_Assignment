@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "../lib/firebase"; // adjust path if needed
 import { Loader } from "lucide-react";
 
