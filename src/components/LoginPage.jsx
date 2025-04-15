@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase.js";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Hook for navigation
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -14,6 +15,7 @@ const LoginPage = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Logged in!");
+      navigate("/"); // Redirect to home page after successful login
     } catch (err) {
       alert(err.message);
     } finally {
@@ -59,19 +61,6 @@ const LoginPage = () => {
           >
             {loading ? "Loading..." : "Log In"}
           </button>
-
-          {/* Link to SignUp Page */}
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-500">
-              Don't have an account?{" "}
-              <Link
-                to="/signup"
-                className="font-medium text-emerald-600 hover:text-emerald-700"
-              >
-                Sign Up
-              </Link>
-            </p>
-          </div>
         </form>
       </div>
     </div>

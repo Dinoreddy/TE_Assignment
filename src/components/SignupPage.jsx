@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase.js";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Hook for navigation
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -14,6 +15,7 @@ const SignupPage = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert("User created!");
+      navigate("/login"); // Redirect to login page after successful signup
     } catch (err) {
       alert(err.message);
     } finally {
@@ -64,12 +66,12 @@ const SignupPage = () => {
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-500">
               Already have an account?{" "}
-              <Link
-                to="/login"
+              <a
+                href="/login"
                 className="font-medium text-emerald-600 hover:text-emerald-700"
               >
                 Log In
-              </Link>
+              </a>
             </p>
           </div>
         </form>
