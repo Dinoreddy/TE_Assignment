@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase.js";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -14,10 +15,10 @@ const SignupPage = () => {
     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      alert("User created!");
+      toast.success("User created!");
       navigate("/login"); // Redirect to login page after successful signup
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -30,7 +31,9 @@ const SignupPage = () => {
         <form onSubmit={handleSignup} className="space-y-4">
           {/* Email Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-500">Email</label>
+            <label className="block text-sm font-medium text-gray-500">
+              Email
+            </label>
             <input
               type="email"
               value={email}
@@ -43,7 +46,9 @@ const SignupPage = () => {
 
           {/* Password Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-500">Password</label>
+            <label className="block text-sm font-medium text-gray-500">
+              Password
+            </label>
             <input
               type="password"
               value={password}
@@ -65,9 +70,12 @@ const SignupPage = () => {
           {/* Link to LogIn Page */}
           <div className="mt-4 text-center text-sm text-gray-500">
             Already have an account?{" "}
-          <Link to="/login" className="text-emerald-600 hover:text-emerald-700">
-            Login here
-          </Link>
+            <Link
+              to="/login"
+              className="text-emerald-600 hover:text-emerald-700"
+            >
+              Login here
+            </Link>
           </div>
         </form>
       </div>

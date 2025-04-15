@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase.js";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"; // Import the Link component
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,10 +16,10 @@ const LoginPage = () => {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      alert("Logged in!");
+      toast.success("Logged in successfully!"); 
       navigate("/"); // Redirect to home page after successful login
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
