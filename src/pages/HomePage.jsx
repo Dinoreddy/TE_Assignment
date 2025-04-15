@@ -98,7 +98,7 @@ const HomePage = () => {
       </div>
 
       {/* Centered Main Container */}
-      <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gray-50 pt-16">
+      <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 mb-40 bg-gray-50 pt-16">
         <div className="w-full max-w-7xl space-y-6">
           {/* Header Actions */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
