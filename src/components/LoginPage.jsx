@@ -3,7 +3,7 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase.js";
 
-const Login = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,11 +19,20 @@ const Login = () => {
 
   return (
     <form onSubmit={handleLogin}>
-      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-      <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" />
+      <input
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <input
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        type="password"
+      />
       <button type="submit">Log In</button>
     </form>
   );
 };
 
-export default Login;
+export default LoginPage;

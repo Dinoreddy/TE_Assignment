@@ -3,8 +3,8 @@ import HomePage from "./pages/HomePage";
 import CreateProductPage from "./pages/CreateProductPage";
 import UpdateProjectPage from "./pages/UpdateProjectPage";
 import { Toaster } from "react-hot-toast";
-import Login from "./components/login";
-import Signup from "./components/signup";
+import Login from "./components/LoginPage"
+import Signup from "./components/SignupPage";
 
 function App() {
   return (
