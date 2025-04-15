@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase.js";
+import { Link } from "react-router-dom";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -58,6 +59,19 @@ const SignupPage = () => {
           >
             {loading ? "Loading..." : "Sign Up"}
           </button>
+
+          {/* Link to LogIn Page */}
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-500">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="font-medium text-emerald-600 hover:text-emerald-700"
+              >
+                Log In
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>
