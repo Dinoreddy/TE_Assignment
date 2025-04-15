@@ -3,7 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase"; // adjust path if needed
 import { Loader } from "lucide-react";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRouter = ({ children }) => {
   const [user, loading] = useAuthState(auth);
 
   if (loading) {
@@ -17,4 +17,4 @@ const PrivateRoute = ({ children }) => {
   return user ? children : <Navigate to="/login" />;
 };
 
-export default PrivateRoute;
+export default PrivateRouter;

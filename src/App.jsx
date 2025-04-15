@@ -5,6 +5,7 @@ import UpdateProjectPage from "./pages/UpdateProjectPage";
 import { Toaster } from "react-hot-toast";
 import Login from "./components/LoginPage"
 import Signup from "./components/SignupPage";
+import PrivateRouter from "./components/PrivateRouter";
 
 function App() {
   return (
@@ -16,25 +17,25 @@ function App() {
         <Route
           path="/"
           element={
-            <PrivateRoute>
+            <PrivateRouter>
               <HomePage />
-            </PrivateRoute>
+            </PrivateRouter>
           }
         />
         <Route
           path="/create"
           element={
-            <PrivateRoute>
+            <PrivateRouter>
               <CreateProductPage />
-            </PrivateRoute>
+            </PrivateRouter>
           }
         />
         <Route
           path="/update/:id"
           element={
-            <PrivateRoute>
+            <PrivateRouter>
               <UpdateProjectPage />
-            </PrivateRoute>
+            </PrivateRouter>
           }
         />
       </Routes>
