@@ -1,12 +1,3 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Loader } from "lucide-react";
-import axios from "../lib/AxiosInstance.js";
-import toast from "react-hot-toast";
-import { signOut } from "firebase/auth";
-import { auth } from "../lib/firebase.js";
-import { useNavigate } from "react-router-dom";
-
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -88,12 +79,16 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen mt-40 p-4 sm:p-6 lg:p-8 relative">
-      <button
-        onClick={handleLogout}
-        className="sm:w-64 ml-400px bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mb-4"
-      >
-        Logout
-      </button>
+      {/* Logout Button positioned above the search bar */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={handleLogout}
+          className="bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        >
+          Logout
+        </button>
+      </div>
+
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <Link to="/create" className="self-start">
@@ -268,6 +263,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
       {/* Delete Confirmation Modal */}
       {modalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
