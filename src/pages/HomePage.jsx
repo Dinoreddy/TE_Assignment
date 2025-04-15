@@ -87,9 +87,8 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen mt-40 p-4 sm:p-6 lg:p-8 relative">
-  {/* Logout Button */}
-  <div className="flex justify-end mb-4">
+    <>
+      <div className="flex justify-end mb-4">
     <button
       onClick={handleLogout}
       className="bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
@@ -98,6 +97,10 @@ const HomePage = () => {
     </button>
   </div>
 
+   
+    <div className="min-h-screen mt-40 p-4 sm:p-6 lg:p-8 relative">
+  {/* Logout Button */}
+  
   <div className="max-w-7xl mx-auto space-y-6">
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
       <Link to="/create" className="self-start">
@@ -298,7 +301,7 @@ const HomePage = () => {
     </div>
   )}
 </div>
-
+</>
   );
 };
 
