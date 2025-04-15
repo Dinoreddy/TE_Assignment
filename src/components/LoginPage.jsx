@@ -2,6 +2,7 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase.js";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"; // Import the Link component
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -62,6 +63,14 @@ const LoginPage = () => {
             {loading ? "Loading..." : "Log In"}
           </button>
         </form>
+
+        {/* Sign-Up Link */}
+        <div className="mt-4 text-center text-sm text-gray-500">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-emerald-600 hover:text-emerald-700">
+            Sign up here
+          </Link>
+        </div>
       </div>
     </div>
   );

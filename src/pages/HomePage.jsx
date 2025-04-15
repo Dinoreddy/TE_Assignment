@@ -91,7 +91,7 @@ const HomePage = () => {
       {/* Logout Button */}
       <button
         onClick={handleLogout}
-        className="absolute top-4 right-4 bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        className="w-full sm:w-64 bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mb-4"
       >
         Logout
       </button>
