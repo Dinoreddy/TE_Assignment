@@ -90,10 +90,10 @@ const HomePage = () => {
     <div className="min-h-screen mt-40 p-4 sm:p-6 lg:p-8 relative">
       <button
         onClick={handleLogout}
-        className="w-full sm:w-64 bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mb-4"
+        className="sm:w-64 ml-40 bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mb-4"
       >
         Logout
-      </button>{" "}
+      </button>
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <Link to="/create" className="self-start">
