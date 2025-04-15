@@ -1,3 +1,12 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Loader } from "lucide-react";
+import axios from "../lib/AxiosInstance.js";
+import toast from "react-hot-toast";
+import { signOut } from "firebase/auth";
+import { auth } from "../lib/firebase.js";
+import { useNavigate } from "react-router-dom";
+
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -79,7 +88,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen mt-40 p-4 sm:p-6 lg:p-8 relative">
-      {/* Logout Button positioned above the search bar */}
+      {/* Logout Button */}
       <div className="flex justify-end mb-4">
         <button
           onClick={handleLogout}
