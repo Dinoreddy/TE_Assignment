@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Loader } from "lucide-react";
 import axios from "../lib/AxiosInstance.js";
 import toast from "react-hot-toast";
+import { signOut } from "firebase/auth";
+import { auth } from "../lib/firebase.js";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
@@ -10,20 +13,21 @@ const HomePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteProjectId, setDeleteProjectId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProjects = async () => {
       try {
         setLoading(true);
         const res = await axios.get("/");
         setProjects(res.data);
-        console.log("res data after fecthing products", res.data);
+        console.log("res data after fetching projects", res.data);
         setLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchProducts();
+    fetchProjects();
   }, []);
 
   const columns = [
@@ -71,8 +75,27 @@ const HomePage = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login");
+      toast.success("Logged out successfully!");
+    } catch (error) {
+      toast.error("Error logging out");
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="min-h-screen mt-40 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen mt-40 p-4 sm:p-6 lg:p-8 relative">
+      {/* Logout Button */}
+      <button
+        onClick={handleLogout}
+        className="absolute top-4 right-4 bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+      >
+        Logout
+      </button>
+
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <Link to="/create" className="self-start">
@@ -177,6 +200,7 @@ const HomePage = () => {
               )}
             </table>
 
+            {/* Mobile view */}
             <div className="md:hidden space-y-4">
               {loading ? (
                 <div className="flex items-center justify-center py-4">
@@ -220,8 +244,6 @@ const HomePage = () => {
                       </p>
                     </div>
                     <div className="flex gap-2 pt-2">
-                      {console.log("Rendering row:", row)}
-                      {console.log("row.id:", row.id)}
                       <Link to={`/update/${row.id}`} className="flex-1">
                         <button className="w-full bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 rounded-lg text-sm">
                           Edit
@@ -249,6 +271,7 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* Delete Confirmation Modal */}
       {modalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
