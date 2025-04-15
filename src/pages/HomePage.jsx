@@ -91,7 +91,7 @@ const HomePage = () => {
       <div className="flex justify-end mb-4">
     <button
       onClick={handleLogout}
-      className="bg-red-600 hover:bg-red-500 text-white py-2 px-4 mt-4 mx-5 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+      className="bg-red-600 hover:bg-red-500 text-white py-2 px-4 mt-4 mx-15 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
     >
       Logout
     </button>
