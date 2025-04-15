@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Loader } from "lucide-react";
 import axios from "../lib/AxiosInstance.js";
 import toast from "react-hot-toast";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase.js";
-import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
@@ -21,10 +20,10 @@ const HomePage = () => {
         setLoading(true);
         const res = await axios.get("/");
         setProjects(res.data);
-        console.log("res data after fetching projects", res.data);
         setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     fetchProjects();
@@ -54,10 +53,7 @@ const HomePage = () => {
 
   const filteredData = projects.filter((row) =>
     columns.some((col) =>
-      row[col.accessor]
-        ?.toString()
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+      row[col.accessor]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
@@ -70,7 +66,7 @@ const HomePage = () => {
       setDeleteProjectId(null);
       toast.success("Project deleted successfully");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to delete project");
       console.log("Error in deleting project", error);
     }
   };
@@ -92,15 +88,16 @@ const HomePage = () => {
       <div className="fixed top-4 right-4 z-50">
         <button
           onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg shadow-md text-sm"
         >
           Logout
         </button>
       </div>
 
-      {/* Main Content */}
-      <div className="min-h-screen p-4 sm:p-6 lg:p-8 relative pt-24">
-        <div className="max-w-7xl mx-auto space-y-6">
+      {/* Centered Main Container */}
+      <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gray-50 pt-16">
+        <div className="w-full max-w-7xl space-y-6">
+          {/* Header Actions */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <Link to="/create" className="self-start">
               <button className="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg">
@@ -116,7 +113,8 @@ const HomePage = () => {
             />
           </div>
 
-          <div className="overflow-hidden shadow-md border border-gray-600 rounded-lg">
+          {/* Table */}
+          <div className="overflow-hidden shadow-md border border-gray-600 rounded-lg bg-white">
             <div className="overflow-x-auto">
               <table className="min-w-full hidden md:table">
                 <thead className="bg-gray-100">
@@ -137,15 +135,9 @@ const HomePage = () => {
                 {loading ? (
                   <tbody>
                     <tr>
-                      <td
-                        colSpan={columns.length + 1}
-                        className="py-4 text-center"
-                      >
+                      <td colSpan={columns.length + 1} className="py-4 text-center">
                         <div className="flex items-center justify-center">
-                          <Loader
-                            className="mr-2 h-5 w-5 animate-spin"
-                            aria-hidden="true"
-                          />
+                          <Loader className="mr-2 h-5 w-5 animate-spin" />
                           Loading Projects..
                         </div>
                       </td>
@@ -204,22 +196,16 @@ const HomePage = () => {
                 )}
               </table>
 
-              {/* Mobile view */}
-              <div className="md:hidden space-y-4">
+              {/* Mobile View */}
+              <div className="md:hidden space-y-4 p-4">
                 {loading ? (
                   <div className="flex items-center justify-center py-4">
-                    <Loader
-                      className="mr-2 h-5 w-5 animate-spin"
-                      aria-hidden="true"
-                    />
+                    <Loader className="mr-2 h-5 w-5 animate-spin" />
                     <span>Loading Projects..</span>
                   </div>
                 ) : filteredData.length > 0 ? (
                   filteredData.map((row, index) => (
-                    <div
-                      key={index}
-                      className="bg-white p-4 rounded-lg shadow space-y-3"
-                    >
+                    <div key={index} className="bg-white p-4 rounded-lg shadow space-y-3">
                       <div className="flex justify-between items-start">
                         <h3 className="font-medium">{row.title}</h3>
                         <span
@@ -235,8 +221,7 @@ const HomePage = () => {
                       <p className="text-sm text-gray-600">{row.description}</p>
                       <div className="text-sm">
                         <p>
-                          <span className="font-medium">Skills:</span>{" "}
-                          {row.skillSet}
+                          <span className="font-medium">Skills:</span> {row.skillSet}
                         </p>
                         <p>
                           <span className="font-medium">Members:</span>{" "}
@@ -266,38 +251,37 @@ const HomePage = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="text-center text-gray-500 py-4">
-                    No Projects found
-                  </div>
+                  <div className="text-center text-gray-500 py-4">No Projects found</div>
                 )}
               </div>
             </div>
           </div>
         </div>
-        {/* Delete Confirmation Modal */}
-        {modalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
-              <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
-              <p>Are you sure you want to delete this project?</p>
-              <div className="flex flex-col sm:flex-row justify-end mt-4 gap-3">
-                <button
-                  onClick={() => setModalOpen(false)}
-                  className="bg-blue-400 hover:bg-blue-300 text-white py-2 px-4 rounded-md"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleDeleteProject}
-                  className="bg-red-400 hover:bg-red-300 text-white py-2 px-4 rounded-md"
-                >
-                  Delete
-                </button>
-              </div>
+      </div>
+
+      {/* Delete Confirmation Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+            <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
+            <p>Are you sure you want to delete this project?</p>
+            <div className="flex flex-col sm:flex-row justify-end mt-4 gap-3">
+              <button
+                onClick={() => setModalOpen(false)}
+                className="bg-blue-400 hover:bg-blue-300 text-white py-2 px-4 rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteProject}
+                className="bg-red-400 hover:bg-red-300 text-white py-2 px-4 rounded-md"
+              >
+                Delete
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };
